@@ -3,6 +3,7 @@ import logging
 import os
 
 import torch
+import dllogger
 
 from maskrcnn_benchmark.utils.model_serialization import load_state_dict
 from maskrcnn_benchmark.utils.c2_model_loading import load_c2_format
@@ -46,6 +47,7 @@ class Checkpointer(object):
 
         save_file = os.path.join(self.save_dir, "{}.pth".format(name))
         self.logger.info("Saving checkpoint to {}".format(save_file))
+        dllogger.log("CHECKPOINT", data={"save": True, "path": save_file})
         torch.save(data, save_file)
         self.tag_last_checkpoint(save_file)
 
